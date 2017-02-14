@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.poei.concession.model.base.DateableItem;
 
 public class Garage extends DateableItem {
+	private String name;
 	private String address;
 	private ArrayList<Wheel> stock;
 	private ArrayList<Wheel> trash;
@@ -12,6 +13,18 @@ public class Garage extends DateableItem {
 	private ArrayList<Car> doneCars;
 	private ArrayList<Technician> technician;
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 	/**
 	 * @return the address
 	 */
@@ -100,6 +113,7 @@ public class Garage extends DateableItem {
 		this.stock = new ArrayList<Wheel>();
 		this.technician = new ArrayList<Technician>();
 		this.trash = new ArrayList<Wheel>();
+		this.name = name;
 	}
 
 	public void recieve(Car car){
@@ -144,8 +158,63 @@ public class Garage extends DateableItem {
 
 		if (result == null && !flag) {
 			System.out.println("We never register your car in our concession.");
+		}else if(flag){
+			this.getDoneCars().remove(result);
 		}
 
 		return result;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String result = "";
+		result += "Garage : " + this.name +"\n";
+		result += "  Stock " + this.stock.size() +" wheels \n";
+
+		int wheelType1 = 0;
+		int wheelType2 = 0;
+
+		for (Wheel wheel : this.stock) {
+			if (wheel.getDiametre() == 24) {
+				wheelType1++;
+			}else if(wheel.getDiametre() == 32){
+				wheelType2++;
+			}
+		}
+
+		result += "    wheel 24 : " + wheelType1 + "\n";
+		result += "    wheel 32 : " + wheelType2 + "\n";
+
+		result += "  Trash " + this.trash.size() +" wheels \n";
+
+		wheelType1 = 0;
+		wheelType2 = 0;
+
+		for (Wheel wheel : this.trash) {
+			if (wheel.getDiametre() == 24) {
+				wheelType1++;
+			}else if(wheel.getDiametre() == 32){
+				wheelType2++;
+			}
+		}
+
+		result += "    wheel 24 : " + wheelType1 + "\n";
+		result += "    wheel 32 : " + wheelType2 + "\n";
+
+		result += "  Current todoCars : " + this.todoCars.size() + "\n";
+		for (Car car : todoCars) {
+			result += "    " + car.getName();
+		}
+
+		result += "  Current doneCars : " + this.doneCars.size() + "\n";
+		for (Car car : doneCars) {
+			result += "    " + car.getName();
+		}
+
+		return result;
+	}
+
+
 }

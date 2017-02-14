@@ -44,11 +44,13 @@ public class Technician extends DateableItem {
 		
 		car.getWheels().clear();
 		
+		int usedWheels = 0;
 		for (Wheel wheel : this.garage.getStock()) {
-			if (wheel.getDiametre()== wheelType) {
+			if (wheel.getDiametre()== wheelType && usedWheels < 4) {
 				wheel.setCreateAt(new Date());
 				car.getWheels().add(wheel);
 				System.out.println("New wheel :\n" + wheel + "\n added.");
+				usedWheels++;
 			}
 		}
 		for (Wheel whell : car.getWheels()) {
